@@ -17,6 +17,8 @@ Le joueur peut choisir d’être **détective** ou **suspect** :
 
 ```bash
 git clone https://github.com/LeRandom12/projet_python
-cd ai-detective-game
+cd projet_python
 pip install -r requirements.txt
 python detective.py
+
+
