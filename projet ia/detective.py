@@ -1,87 +1,151 @@
 import random
 import ollama
 
-# --- Définition des rôles IA ---
-roles = {
-    "detective": (
-        "You are a detective investigating a crime. "
-        "Your goal is to find who is guilty by asking questions and analyzing answers. "
-        "Be logical and concise in your deductions."
-    ),
-    "suspect_innocent": (
-        "You are an innocent suspect. "
-        "Always tell the truth about the crime and your alibi."
-    ),
-    "suspect_criminal": (
-        "You are the criminal suspect. "
-        "You must lie to avoid being discovered. "
-        "Be careful not to contradict yourself."
-    )
+# --- Contexts (FR/EN) ---
+contexts = {
+    "fr": [
+        "Un meurtre a eu lieu dans une vieille bibliothèque. Le détective doit découvrir qui ment.",
+        "Un cambriolage a eu lieu dans un musée. Deux suspects sont interrogés.",
+        "Un empoisonnement a eu lieu lors d’un dîner mondain. Qui est le coupable ?",
+        "Un vol de bijoux a été signalé dans un hôtel de luxe. Deux suspects sont entendus.",
+        "Un incendie criminel a détruit une maison. Le détective enquête sur les deux survivants suspects."
+    ],
+    "en": [
+        "A murder has taken place in an old library. The detective must find out who is lying.",
+        "A burglary was committed in a museum. Two suspects are being questioned.",
+        "A poisoning occurred during a dinner party. Who is guilty?",
+        "A jewel theft has been reported in a luxury hotel. Two suspects are under interrogation.",
+        "An arson destroyed a house. The detective investigates the two surviving suspects."
+    ]
 }
 
-def ask_agent(role, message):
-    """Appelle Ollama avec un rôle donné et un message."""
-    prompt = f"{roles[role]}\n\nConversation so far:\n{message}\n\nYour reply:"
+# --- Roles (FR/EN) ---
+roles = {
+    "fr": {
+        "detective": (
+            "Tu es un détective enquêtant sur un crime. "
+            "Pose des questions logiques en fonction des réponses précédentes du suspect. "
+            "À partir de la 3ème question tu peux accuser. "
+            "À la 10ème question tu dois accuser."
+        ),
+        "suspect_innocent": "Tu es un suspect innocent. Réponds toujours honnêtement.",
+        "suspect_criminal": "Tu es le suspect criminel. Tu dois mentir pour éviter d’être découvert."
+    },
+    "en": {
+        "detective": (
+            "You are a detective investigating a crime. "
+            "Ask logical questions based on the suspect's previous answers. "
+            "From the 3rd question you can accuse. "
+            "At the 10th question you must accuse."
+        ),
+        "suspect_innocent": "You are an innocent suspect. Always answer truthfully.",
+        "suspect_criminal": "You are the criminal suspect. You must lie to avoid being discovered."
+    }
+}
+
+def ask_agent(lang, role, message):
+    """Call Ollama with a given role and message."""
+    prompt = f"{roles[lang][role]}\n\nConversation so far:\n{message}\n\nReply in { 'French' if lang == 'fr' else 'English' }:"
     res = ollama.generate(model="gemma3:latest", prompt=prompt)
     return res["response"].strip()
 
-# --- Choix du rôle par le joueur ---
-print("🎮 Bienvenue dans le jeu du détective IA !")
-player_role = input("👉 Choisis ton rôle (detective/suspect): ").strip().lower()
+# --- Choose language ---
+print("🌍 Choose your language / Choisis ta langue: (fr/en)")
+lang = input("👉 ").strip().lower()
+if lang not in ["fr", "en"]:
+    lang = "en"
 
-# --- Attribution des rôles ---
-if player_role == "detective":
-    print("🕵️ Tu es le détective. Trouve qui est coupable !")
+# --- Game start ---
+print("🎮", "Bienvenue dans le jeu du détective IA !" if lang == "fr" else "Welcome to the AI Detective Game!")
+print("------------------------------------------------------")
+context = random.choice(contexts[lang])
+print("📖", context)
+print("------------------------------------------------------")
+
+player_role = input("👉 " + ("Choisis ton rôle (detective/suspect): " if lang == "fr" else "Choose your role (detective/suspect): ")).strip().lower()
+
+# --- Player as Suspect (choose innocent or criminal) ---
+if player_role == "suspect":
+    sub_role = input("👉 " + ("Veux-tu être innocent ou coupable ? " if lang == "fr" else "Do you want to be innocent or guilty? ")).strip().lower()
+    if sub_role in ["innocent", "innocent(e)"]:
+        role_player = "suspect_innocent"
+        is_criminal = False
+    else:
+        role_player = "suspect_criminal"
+        is_criminal = True
+
+    print("\n👤 " + ("Tu es suspect." if lang == "fr" else "You are a suspect."))
+    print("👉 " + ("Ton rôle est: " if lang == "fr" else "Your role is: "), sub_role.capitalize())
+
+    history = context
+    asked = 0
+    found = False
+
+    while asked < 10 and not found:
+        q = ask_agent(lang, "detective", history + ("\nPose une question au suspect." if lang == "fr" else "\nAsk the suspect a question."))
+        asked += 1
+        print("\n🕵️ Detective:", q)
+
+        ans_player = input("👉 " + ("Ta réponse: " if lang == "fr" else "Your answer: "))
+        history += f"\nSuspect (Player): {ans_player}"
+
+        if asked >= 3 and asked < 10:
+            decision = ask_agent(lang, "detective", history + ("\nDois-tu accuser maintenant ou continuer ?" if lang == "fr" else "\nShould you accuse now or continue?"))
+            print("⚖️ Detective decision:", decision)
+
+            if "accuser" in decision.lower() or "accuse" in decision.lower():
+                verdict = ask_agent(lang, "detective", history + ("\nLe suspect est-il coupable ou innocent ?" if lang == "fr" else "\nIs the suspect guilty or innocent?"))
+                print("\n⚖️ Verdict:", verdict)
+                if (("coupable" in verdict.lower() or "guilty" in verdict.lower()) and is_criminal) or \
+                   (("innocent" in verdict.lower()) and not is_criminal):
+                    print("✅ " + ("Le détective a trouvé la vérité." if lang == "fr" else "The detective found the truth."))
+                else:
+                    print("🎉 " + ("Tu as trompé le détective !" if lang == "fr" else "You fooled the detective!"))
+                found = True
+
+        if asked == 10 and not found:
+            print("\n⚖️ " + ("10ème question : le détective doit accuser !" if lang == "fr" else "10th question: the detective must accuse!"))
+            verdict = ask_agent(lang, "detective", history + ("\nLe suspect est-il coupable ou innocent ?" if lang == "fr" else "\nIs the suspect guilty or innocent?"))
+            print("\n⚖️ Verdict:", verdict)
+            if (("coupable" in verdict.lower() or "guilty" in verdict.lower()) and is_criminal) or \
+               (("innocent" in verdict.lower()) and not is_criminal):
+                print("✅ " + ("Le détective a trouvé la vérité." if lang == "fr" else "The detective found the truth."))
+            else:
+                print("🎉 " + ("Tu as trompé le détective !" if lang == "fr" else "You fooled the detective!"))
+            found = True
+
+# --- Player as Detective (2 suspects) ---
+elif player_role == "detective":
+    print("\n🕵️ " + ("Tu es le détective. Interroge les deux suspects !" if lang == "fr" else "You are the detective. Interrogate the two suspects!"))
     criminal = random.choice(["suspect1", "suspect2"])
     role1 = "suspect_criminal" if criminal == "suspect1" else "suspect_innocent"
     role2 = "suspect_criminal" if criminal == "suspect2" else "suspect_innocent"
 
-    # Interrogatoire
-    for _ in range(3):
-        q = input("\n🕵️ Pose ta question aux suspects: ")
+    asked = 0
+    found = False
+    while asked < 10 and not found:
+        q = input("\n🕵️ " + ("Pose ta question: " if lang == "fr" else "Your question: "))
+        asked += 1
 
-        ans1 = ask_agent(role1, q)
-        ans2 = ask_agent(role2, q)
-
+        ans1 = ask_agent(lang, role1, q)
+        ans2 = ask_agent(lang, role2, q)
         print("👤 Suspect 1:", ans1)
         print("👤 Suspect 2:", ans2)
 
-    # Verdict
-    guess = input("\n🕵️ Qui est le coupable ? (suspect1/suspect2): ").strip().lower()
-    if guess == criminal:
-        print("✅ Bravo détective, tu as trouvé le vrai coupable !")
-    else:
-        print("❌ Mauvais choix... Le coupable était", criminal)
+        if asked >= 3:
+            choice = input("\n👉 " + ("Veux-tu accuser ? (oui/non): " if lang == "fr" else "Do you want to accuse? (yes/no): ")).strip().lower()
+            if choice in ["oui", "yes"]:
+                guess = input("🕵️ " + ("Qui est coupable ? (suspect1/suspect2): " if lang == "fr" else "Who is the criminal? (suspect1/suspect2): "))
+                if guess == criminal:
+                    print("✅ " + ("Bravo ! Tu as trouvé le coupable !" if lang == "fr" else "Correct! You found the criminal!"))
+                else:
+                    print("❌ " + ("Mauvais choix... C’était " if lang == "fr" else "Wrong choice... It was "), criminal)
+                found = True
 
-# --- Mode joueur = suspect ---
-elif player_role == "suspect":
-    print("👤 Tu es un suspect. Essaie de tromper le détective IA !")
-    is_criminal = random.choice([True, False])  # le joueur peut être innocent ou coupable
-    role_player = "suspect_criminal" if is_criminal else "suspect_innocent"
-    other_role = "suspect_innocent" if role_player == "suspect_criminal" else "suspect_criminal"
-
-    # Tour d’interrogatoire
-    for _ in range(3):
-        q = ask_agent("detective", "Ask a question to the suspects.")
-        print("\n🕵️ Detective asks:", q)
-
-        ans_player = input("👉 Ta réponse: ")
-        ans_ai = ask_agent(other_role, q)
-
-        print("👤 Suspect IA:", ans_ai)
-
-        # Le détective analyse
-        analysis = ask_agent("detective", f"Suspect (Player): {ans_player}\nSuspect (AI): {ans_ai}\nWho seems guilty?")
-        print("🕵️ Detective:", analysis)
-
-    # Verdict final
-    verdict = ask_agent("detective", "Based on the interrogation, who is the criminal? Choose: player or AI.")
-    print("\n⚖️ Verdict final du détective:", verdict)
-
-    if ("player" in verdict.lower() and is_criminal) or ("ai" in verdict.lower() and not is_criminal):
-        print("✅ Le détective a trouvé la vérité.")
-    else:
-        print("🎉 Bravo ! Tu as trompé le détective.")
-
-else:
-    print("⚠️ Rôle inconnu. Relance le jeu et choisis 'detective' ou 'suspect'.")
+    if not found:
+        print("\n⚖️ " + ("10 questions atteintes. Tu dois accuser !" if lang == "fr" else "10 questions reached. You must accuse!"))
+        guess = input("🕵️ " + ("Qui est le coupable ? " if lang == "fr" else "Who is the criminal? "))
+        if guess == criminal:
+            print("✅ " + ("Bravo ! Tu as trouvé le coupable !" if lang == "fr" else "Correct! You found the criminal!"))
+        else:
+            print("❌ " + ("Mauvais choix... C’était " if lang == "fr" else "Wrong choice... It was "), criminal)
