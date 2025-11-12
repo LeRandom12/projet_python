@@ -1,0 +1,24 @@
+{
+  "mode": "detective",
+  "timestamp": "2025-11-12T16:34:35.554638",
+  "lang": "fr",
+  "difficulty": "easy",
+  "context": "Un cambriolage a eu lieu dans un musée. Deux suspects sont interrogés.",
+  "case": {
+    "culprit": "suspect1",
+    "alibis": {
+      "suspect1": "Chez moi à regarder la TV de 20h00 à 23h00",
+      "suspect2": "À la bibliothèque de 20h30 à 22h00"
+    },
+    "evidence": {
+      "murder_time": "21:15",
+      "location": "vieille bibliothèque",
+      "found_item": "Un gant avec des traces d’encre"
+    }
+  },
+  "questions": 4,
+  "history": "\nQ: ou etiez vous\nS1: Je... je suis resté chez moi. Je n'ai rien fait.\nS2: Je... je devais rendre quelques livres à la bibliothèque. J'y étais de 20h30 à 22h00, je vous assure.\nQ: tu faisais quoi\nS1: Je... je déchiffrais un vieux livre. Un ouvrage sur l'histoire locale, rien de plus. Je suis sorti pour prendre l'air un peu après 21h.\nS2: S2: Je... je lisais. J'ai passé le temps à consulter des ouvrages. C'est tout.\nQ: qui est le coupable\nS1: Je... je ne sais pas. Je n'ai rien fait. Je crois que c'est S2, il était à la bibliothèque et il y a un gant avec de l'encre.\nS2: S2: Je... je suis à la bibliothèque. J'y étais de 20h30 à 22h00. Et j'ai trouvé un gant avec des traces d’encre. C'est ce que je faisais, je lisais et j'ai découvert ce gant.\nQ: accuse suspect2\nS1: S1: Non, non, vous vous trompez ! C'est lui, je vous le dis. Il a trouvé le gant, il est coupable !\nS2: S2: Oh mon Dieu... Je suis pris. C'est vrai, j'ai trouvé le gant. Je... je ne sais pas comment ça s'est passé. Je devais juste lire... Je ne voulais pas que ça arrive.",
+  "culprit": "suspect1",
+  "player_guess": "suspect2",
+  "success": false
+}

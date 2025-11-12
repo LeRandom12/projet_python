@@ -1,0 +1,24 @@
+{
+  "mode": "detective",
+  "timestamp": "2025-11-12T14:22:37.933249",
+  "lang": "fr",
+  "difficulty": "easy",
+  "context": "Un incendie criminel a détruit une maison. Le détective enquête sur les deux survivants suspects.",
+  "case": {
+    "culprit": "suspect2",
+    "alibis": {
+      "suspect1": "Chez moi à regarder la TV de 20h00 à 23h00",
+      "suspect2": "À la bibliothèque de 20h30 à 22h00"
+    },
+    "evidence": {
+      "murder_time": "21:15",
+      "location": "vieille bibliothèque",
+      "found_item": "Un gant avec des traces d’encre"
+    }
+  },
+  "questions": 4,
+  "history": "\nQ: 'preuve: ou etiez vous?'\nS1: Je... je regardais la télé chez moi. De 20h à 23h00, environ.\nS2: Je... je rentrais chez moi, après avoir fait un peu de lecture. C'était vers 21h15, je crois. J'ai été surpris par le bruit.\nQ: quel bruit\nS1: S1: Un bruit... comme un choc, je crois. Un bruit fort, soudain.\nS2: Un bruit de bris de verre, je crois. Ça a été assez fort.\nQ: 'preuve:donnez moi une preuve'\nS1: S1: Euh, il y a un gant avec des traces d’encre, vous l'avez trouvé ? Je ne sais pas comment il est arrivé là, mais je ne l'ai pas touché.\nS2: S2: J’ai... j’ai trouvé un gant avec de l’encre sur la scène. C’est tout ce dont je sais vraiment.\nQ: accuse suspect2\nS1: S1: Je vous assure, je n'ai rien à voir avec ça. J'étais chez moi, à regarder la télé. Et je suis désolé, j'ai juste trouvé ce gant avec de l'encre, je ne sais pas comment il est arrivé là.\nS2: S2:  Je... je ne sais pas ce que vous voulez dire. Je vous ai dit que j'ai trouvé un gant avec de l'encre. C'est la seule chose dont je sais !",
+  "culprit": "suspect2",
+  "player_guess": "suspect2",
+  "success": true
+}
