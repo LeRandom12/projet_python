@@ -1,0 +1,22 @@
+{
+  "mode": "detective",
+  "lang": "fr",
+  "difficulty": "easy",
+  "context": "Un empoisonnement a eu lieu lors d’un dîner mondain. Qui est le coupable ?",
+  "case": {
+    "culprit": "suspect1",
+    "alibis": {
+      "suspect1": "Chez moi à regarder la TV de 20h00 à 23h00",
+      "suspect2": "À la bibliothèque de 20h30 à 22h00"
+    },
+    "evidence": {
+      "murder_time": "21:15",
+      "location": "vieille bibliothèque",
+      "found_item": "Un gant avec des traces d’encre"
+    }
+  },
+  "questions": 3,
+  "history": "\nQ: que faisiez vous hier soir? (Réponds précisément, sans détour.)\nS1: J'étais chez moi. Je lisais. Je suis resté jusqu'à tard.\nS2: J'étais à la bibliothèque. Je suis arrivé vers 20h30 et je suis resté jusqu'à 22h00. J'ai lu, je crois.\nQ: On a retrouvé Un gant avec des traces d’encre. Explique pourquoi cet indice pourrait te concerner.\nS1: (Je frissonne légèrement, visiblement mal à l'aise)\n\n\"Euh... Je... Je ne sais pas. J'ai eu une envie soudaine de noir, vous voyez ? J'avais un carnet de croquis avec des schémas... des plans de la bibliothèque, même. J'ai peut-être utilisé de l'encre pour les retoucher. C'est tout. Un gant... ça peut être n'importe qui, non ?\"\nS2: Oh là là, un gant avec des traces d'encre... C'est étrange. Je passais à la bibliothèque hier soir, oui, comme je vous l'ai dit. J'avais mis un gant pour protéger mes mains en lisant des ouvrages anciens, c'est tout.  Il est possible que le gant ait été utilisé à la vieille bibliothèque, et que les traces d'encre soient dues à quelque chose que j'ai touché pendant ma lecture.  Je n'ai rien fait d'illégal, je vous assure.\nQ: Où étais-tu exactement à 21:15 ?\nS1: À 21h15 ? J'étais... j'étais chez moi. Je lisais. J'avais une migraine, ça m'a forcé à me retirer de ma lecture. Je n'ai pas bougé de la maison.\nS2: S2: À 21h15 ? Je... je devais être à la vieille bibliothèque. J'étais là, à examiner des documents anciens, comme je vous l'ai dit. Je suis resté un moment, puis je suis reparti. Je ne peux pas donner une heure précise, je me suis peut-être perdu un peu dans les archives.",
+  "found": true,
+  "culprit": "suspect1"
+}

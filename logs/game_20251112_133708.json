@@ -1,0 +1,21 @@
+{
+  "mode": "suspect",
+  "lang": "fr",
+  "difficulty": "easy",
+  "context": "Un vol de bijoux a été signalé dans un hôtel de luxe. Deux suspects sont entendus.",
+  "case": {
+    "culprit": "suspect2",
+    "alibis": {
+      "suspect1": "Chez moi à regarder la TV de 20h00 à 23h00",
+      "suspect2": "À la bibliothèque de 20h30 à 22h00"
+    },
+    "evidence": {
+      "murder_time": "21:15",
+      "location": "vieille bibliothèque",
+      "found_item": "Un gant avec des traces d’encre"
+    }
+  },
+  "answers": 3,
+  "history": "Un vol de bijoux a été signalé dans un hôtel de luxe. Deux suspects sont entendus.\nQ: \"Monsieur Dubois, vous étiez dans le bar de l'hôtel ce soir-là. Pouvez-vous me dire avec qui vous avez parlé et ce que vous avez discuté?\"\nSuspect: a personne\nQ: \"Monsieur, pouvez-vous me dire où vous étiez entre 22h00 et 23h00 hier soir ?\"\nSuspect: j'etais chez moi\nQ: \"Monsieur, pouvez-vous me dire où vous vous trouviez précisément entre 22h00 et 00h00 ce soir-là ?\"\nSuspect: j'etais dans ma chambre",
+  "is_criminal": true
+}
