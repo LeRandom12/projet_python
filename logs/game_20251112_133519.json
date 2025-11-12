@@ -1,0 +1,21 @@
+{
+  "mode": "suspect",
+  "lang": "en",
+  "difficulty": "easy",
+  "context": "An arson destroyed a house. The detective investigates the two surviving suspects.",
+  "case": {
+    "culprit": "suspect1",
+    "alibis": {
+      "suspect1": "At home watching TV from 20:00 to 23:00",
+      "suspect2": "At the library from 20:30 to 22:00"
+    },
+    "evidence": {
+      "murder_time": "21:15",
+      "location": "Old library",
+      "found_item": "A glove with traces of ink"
+    }
+  },
+  "answers": 3,
+  "history": "An arson destroyed a house. The detective investigates the two surviving suspects.\nQ: Okay, let's go. Here's my question to the first suspect, let’s call him Mr. Davies:\n\n“Mr. Davies, can you tell me exactly where you were between the hours of 8:00 PM and 11:00 PM last night?” \n\n---\n\nNow, I'm ready for you to tell me how Mr. Davies responds, or if you want me to ask the second suspect!\nSuspect: i were in my house\nQ: Okay, let's go. Here's my question to the first suspect, let's call him Mr. Silas Blackwood:\n\n“Mr. Blackwood, can you tell me exactly where you were between the hours of 10:00 PM and 2:00 AM last night?”\nSuspect: i was doing a footing outside\nQ: Okay, here’s the question the detective asks the first suspect, let’s call him Mr. Davies:\n\n“Mr. Davies, can you tell me exactly where you were between the hours of 8 PM and 11 PM last night?”\nSuspect: in my house",
+  "is_criminal": true
+}

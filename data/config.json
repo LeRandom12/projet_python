@@ -1,0 +1,10 @@
+{
+  "model": "gemma3:latest",
+  "default_language": "fr",
+  "default_difficulty": "normal",
+  "max_questions": 10,
+  "accuse_min_question": 3,
+  "enable_logging": true,
+  "use_cards": true,
+  "theme": "classic"
+}

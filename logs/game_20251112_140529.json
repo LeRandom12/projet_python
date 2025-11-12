@@ -1,0 +1,24 @@
+{
+  "mode": "detective",
+  "timestamp": "2025-11-12T14:05:29.876192",
+  "lang": "fr",
+  "difficulty": "easy",
+  "context": "Un cambriolage a eu lieu dans un musée. Deux suspects sont interrogés.",
+  "case": {
+    "culprit": "suspect2",
+    "alibis": {
+      "suspect1": "Chez moi à regarder la TV de 20h00 à 23h00",
+      "suspect2": "À la bibliothèque de 20h30 à 22h00"
+    },
+    "evidence": {
+      "murder_time": "21:15",
+      "location": "vieille bibliothèque",
+      "found_item": "Un gant avec des traces d’encre"
+    }
+  },
+  "questions": 4,
+  "history": "\nQ: ou etiez vous hier\nS1: Je... je regardais la télé chez moi. De 20h à 23h environ.\nS2: Hier soir ? Je... je crois que j'étais chez moi. Je lisais. C'était une soirée calme.\nQ: 'pression: que faisiez vous hier nuit?'\nS1: Je... je suis resté chez moi, à regarder la télévision. Entre 20h et 23h environ. Je n'ai rien fait d'autre.\nS2: S2: Euh... Je... J'ai eu un petit problème d'insomnie. J'ai fini par me coucher assez tard, vers 23h je crois. Je n'ai pas fait grand-chose de particulier.\nQ: 'preuve: donnez moi des preuves'\nS1: S1: Euh... je... Je n'ai rien de particulier à ajouter. J'étais vraiment chez moi, devant la télé. Je ne sais pas comment ça peut être lié à ce qui s'est passé à la bibliothèque.\nS2: S2: Euh... J'ai... j'ai pris un verre. Juste un verre de vin. Pas plus. Je ne sais pas pourquoi je dis ça, c'est juste... c'est la vérité.\nQ: accuse suspect2\nS1: S1: (Regardant S2 avec un air inquiet) Non, non, vous n'avez rien fait. Je vous le dis, je suis resté chez moi. C'est la seule vérité. Ce gant... ça n'a rien à voir avec moi.\nS2: S2: (Paniqué) Non, non, attendez ! C'est... c'est un malentendu. Je... je ne sais pas ce que vous voulez dire. Je suis resté chez moi. Tout simplement.",
+  "culprit": "suspect2",
+  "player_guess": "suspect2",
+  "success": true
+}
