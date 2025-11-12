@@ -1,5 +1,9 @@
 import random
 import ollama
+import json
+import os
+
+SCORE_FILE = "score.json"
 
 # --- Contexts (FR/EN) ---
 contexts = {
@@ -49,22 +53,35 @@ def ask_agent(lang, role, message):
     res = ollama.generate(model="gemma3:latest", prompt=prompt)
     return res["response"].strip()
 
-# --- Choose language ---
+# --- Score management ---
+def load_score():
+    if os.path.exists(SCORE_FILE):
+        with open(SCORE_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {"player": 0, "ai": 0}
+
+def save_score(scores):
+    with open(SCORE_FILE, "w", encoding="utf-8") as f:
+        json.dump(scores, f, indent=2, ensure_ascii=False)
+
+# --- Game start ---
 print("🌍 Choose your language / Choisis ta langue: (fr/en)")
 lang = input("👉 ").strip().lower()
 if lang not in ["fr", "en"]:
     lang = "en"
 
-# --- Game start ---
 print("🎮", "Bienvenue dans le jeu du détective IA !" if lang == "fr" else "Welcome to the AI Detective Game!")
 print("------------------------------------------------------")
 context = random.choice(contexts[lang])
 print("📖", context)
 print("------------------------------------------------------")
 
+scores = load_score()
+print("📊", "Score actuel:" if lang == "fr" else "Current score:", scores)
+
 player_role = input("👉 " + ("Choisis ton rôle (detective/suspect): " if lang == "fr" else "Choose your role (detective/suspect): ")).strip().lower()
 
-# --- Player as Suspect (choose innocent or criminal) ---
+# --- Player as Suspect ---
 if player_role == "suspect":
     sub_role = input("👉 " + ("Veux-tu être innocent ou coupable ? " if lang == "fr" else "Do you want to be innocent or guilty? ")).strip().lower()
     if sub_role in ["innocent", "innocent(e)"]:
@@ -99,8 +116,10 @@ if player_role == "suspect":
                 if (("coupable" in verdict.lower() or "guilty" in verdict.lower()) and is_criminal) or \
                    (("innocent" in verdict.lower()) and not is_criminal):
                     print("✅ " + ("Le détective a trouvé la vérité." if lang == "fr" else "The detective found the truth."))
+                    scores["ai"] += 10
                 else:
                     print("🎉 " + ("Tu as trompé le détective !" if lang == "fr" else "You fooled the detective!"))
+                    scores["player"] += 5
                 found = True
 
         if asked == 10 and not found:
@@ -110,11 +129,13 @@ if player_role == "suspect":
             if (("coupable" in verdict.lower() or "guilty" in verdict.lower()) and is_criminal) or \
                (("innocent" in verdict.lower()) and not is_criminal):
                 print("✅ " + ("Le détective a trouvé la vérité." if lang == "fr" else "The detective found the truth."))
+                scores["ai"] += 10
             else:
                 print("🎉 " + ("Tu as trompé le détective !" if lang == "fr" else "You fooled the detective!"))
+                scores["player"] += 5
             found = True
 
-# --- Player as Detective (2 suspects) ---
+# --- Player as Detective ---
 elif player_role == "detective":
     print("\n🕵️ " + ("Tu es le détective. Interroge les deux suspects !" if lang == "fr" else "You are the detective. Interrogate the two suspects!"))
     criminal = random.choice(["suspect1", "suspect2"])
@@ -138,8 +159,10 @@ elif player_role == "detective":
                 guess = input("🕵️ " + ("Qui est coupable ? (suspect1/suspect2): " if lang == "fr" else "Who is the criminal? (suspect1/suspect2): "))
                 if guess == criminal:
                     print("✅ " + ("Bravo ! Tu as trouvé le coupable !" if lang == "fr" else "Correct! You found the criminal!"))
+                    scores["player"] += 10
                 else:
                     print("❌ " + ("Mauvais choix... C’était " if lang == "fr" else "Wrong choice... It was "), criminal)
+                    scores["player"] -= 5
                 found = True
 
     if not found:
@@ -147,5 +170,11 @@ elif player_role == "detective":
         guess = input("🕵️ " + ("Qui est le coupable ? " if lang == "fr" else "Who is the criminal? "))
         if guess == criminal:
             print("✅ " + ("Bravo ! Tu as trouvé le coupable !" if lang == "fr" else "Correct! You found the criminal!"))
+            scores["player"] += 10
         else:
             print("❌ " + ("Mauvais choix... C’était " if lang == "fr" else "Wrong choice... It was "), criminal)
+            scores["player"] -= 5
+
+# --- Save score ---
+save_score(scores)
+print("\n📊", "Nouveau score:" if lang == "fr" else "Updated score:", scores)
