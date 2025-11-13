@@ -1,0 +1,24 @@
+{
+  "mode": "detective",
+  "timestamp": "2025-11-13T13:16:47.558786",
+  "lang": "fr",
+  "difficulty": "hard",
+  "context": "Un incendie criminel a détruit une maison. Le détective enquête sur les deux survivants suspects.",
+  "case": {
+    "culprit": "suspect2",
+    "alibis": {
+      "suspect1": "Chez moi à regarder la TV de 20h00 à 23h00",
+      "suspect2": "À la bibliothèque de 20h30 à 22h00"
+    },
+    "evidence": {
+      "murder_time": "21:15",
+      "location": "vieille bibliothèque",
+      "found_item": "Un gant avec des traces d’encre"
+    }
+  },
+  "questions": 6,
+  "history": "\nQ: 'preuve: ou etiez vous?'\nS1: Je regardais la télévision chez moi, entre 20h et 23h.\nS2: Je... je rentinais de chez moi, vers 21h. J'étais chez moi, tranquille.\nQ: connaissez vous la victime?\nS1: Non, je ne la connaissais pas. Je n'ai jamais rencontré cette personne.\nS2: Non, je ne la connaissais pas. Je ne l'ai jamais rencontrée.\nQ: 'pression:pourquoi avez vous fait ca.Soyez honnetes\nS1: Je... je n'ai rien fait. Je suis resté chez moi, à regarder la télé. Je n'ai aucune idée de ce qui s'est passé.\nS2: S2: Je... je ne sais pas. C'était une dispute, une mauvaise colère. Je ne me souviens pas de détails, vraiment. C'était très vite arrivé.\nQ: suspect 2\nS1: S1: Je suis resté à la maison, devant la télé. Je n'ai rien fait, je vous le jure.\nS2: S2: Écoutez, ça s'est passé si vite. J'ai eu un petit désaccord, une colère, mais je ne sais pas ce qui s'est réellement passé. Je rentinais de chez moi, c'est tout ce que je sais.\nQ: suspect2\nS1: S1: Je suis resté chez moi, devant la télé. Je n'ai rien fait, je vous le jure. Je suis innocent.\nS2: Je rentinais de chez moi, c'est tout. J'ai eu un petit désaccord, c'est fini. Je ne sais pas ce qui s'est passé.\nQ: accuse suspect2\nS1: S1: Je suis resté chez moi, à regarder la télé. Je n’ai rien fait, je vous le jure. Je suis innocent.\nS2: Non, je n'ai rien fait. Je rentinais de chez moi, c'est tout. Je ne sais pas ce qui s'est passé à la bibliothèque.",
+  "culprit": "suspect2",
+  "player_guess": "suspect2",
+  "success": true
+}

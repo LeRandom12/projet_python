@@ -1,0 +1,6 @@
+pillow
+playsound==1.2.2
+requests
+jsonschema
+typing_extensions
+tk
